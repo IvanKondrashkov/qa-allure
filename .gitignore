@@ -5,6 +5,10 @@
 out
 gen
 
+### Allure template
+.allure
+allure-results
+
 ### Maven template
 target/
 build/
