@@ -61,7 +61,7 @@ public class OrderAcceptTest {
     @Test
     @DisplayName("Accept order is empty order id")
     public void acceptOrderIsEmptyOrderId() {
-        response = orderClient.getOrderByTrackNumber(trackNumber);
+        orderClient.getOrderByTrackNumber(trackNumber);
         response = orderClient.acceptOrder(null, courierId);
         int statusCode = response.extract().statusCode();
         String message = response.extract().path("message");
@@ -73,7 +73,7 @@ public class OrderAcceptTest {
     @Test
     @DisplayName("Accept order is empty courier id")
     public void acceptOrderIsEmptyCourierId() {
-        response = orderClient.getOrderByTrackNumber(trackNumber);
+        orderClient.getOrderByTrackNumber(trackNumber);
         response = orderClient.acceptOrder(orderId, null);
         int statusCode = response.extract().statusCode();
         String message = response.extract().path("message");
@@ -85,7 +85,7 @@ public class OrderAcceptTest {
     @Test
     @DisplayName("Accept order by zero order id")
     public void acceptOrderByZeroOrderId() {
-        response = orderClient.getOrderByTrackNumber(trackNumber);
+        orderClient.getOrderByTrackNumber(trackNumber);
         response = orderClient.acceptOrder(0, courierId);
         int statusCode = response.extract().statusCode();
         String message = response.extract().path("message");
@@ -97,7 +97,7 @@ public class OrderAcceptTest {
     @Test
     @DisplayName("Accept order by zero courier id")
     public void acceptOrderByZeroCourierId() {
-        response = orderClient.getOrderByTrackNumber(trackNumber);
+        orderClient.getOrderByTrackNumber(trackNumber);
         response = orderClient.acceptOrder(orderId, 0);
         int statusCode = response.extract().statusCode();
         String message = response.extract().path("message");

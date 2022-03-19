@@ -36,7 +36,6 @@ public class CourierDeleteTest {
         response = courierClient.loginCourier(new CourierCredentials(courier.getLogin(), courier.getPassword()));
         int id = response.extract().path("id");
         response = courierClient.deleteCourier(id);
-
         int statusCode = response.extract().statusCode();
         boolean isDelete = response.extract().path("ok");
 

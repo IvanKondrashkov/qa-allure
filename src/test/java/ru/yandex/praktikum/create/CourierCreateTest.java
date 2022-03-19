@@ -4,10 +4,12 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.praktikum.entity.Courier;
 import ru.yandex.praktikum.api.CourierClient;
+import ru.yandex.praktikum.entity.CourierCredentials;
 import ru.yandex.praktikum.utils.GenerateCourier;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,11 +22,17 @@ public class CourierCreateTest {
     private ValidatableResponse response;
     private CourierClient courierClient;
     private Courier courier;
+    private int id;
 
     @Before
     public void setUp() {
         courier = GenerateCourier.getRandomCourier();
         courierClient = new CourierClient();
+    }
+
+    @After
+    public void clearState() {
+        courierClient.deleteCourier(id);
     }
 
     @Test
@@ -33,6 +41,8 @@ public class CourierCreateTest {
         response = courierClient.createCourier(courier);
         int statusCode = response.extract().statusCode();
         boolean isCreate = response.extract().path("ok");
+        response = courierClient.loginCourier(new CourierCredentials(courier.getLogin(), courier.getPassword()));
+        id = response.extract().path("id");
 
         assertThat("Courier create incorrect", statusCode, equalTo(SC_CREATED));
         assertThat("Courier create incorrect", isCreate, equalTo(true));
